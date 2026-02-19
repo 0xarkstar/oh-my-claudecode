@@ -148,10 +148,10 @@ describe('Builtin Skills', () => {
   });
 
   describe('listBuiltinSkillNames()', () => {
-    it('should return all skill names', () => {
+    it('should return canonical skill names by default', () => {
       const names = listBuiltinSkillNames();
 
-      expect(names).toHaveLength(42);
+      expect(names).toHaveLength(40);
       expect(names).toContain('autopilot');
       expect(names).toContain('cancel');
       expect(names).toContain('ccg');
@@ -172,6 +172,8 @@ describe('Builtin Skills', () => {
       expect(names).toContain('hud');
       expect(names).toContain('note');
       expect(names).toContain('omc-setup');
+      expect(names).not.toContain('swarm');
+      expect(names).not.toContain('psm');
     });
 
     it('should return an array of strings', () => {
@@ -179,6 +181,14 @@ describe('Builtin Skills', () => {
       names.forEach((name) => {
         expect(typeof name).toBe('string');
       });
+    });
+
+    it('should include aliases when explicitly requested', () => {
+      const names = listBuiltinSkillNames({ includeAliases: true });
+
+      expect(names).toHaveLength(42);
+      expect(names).toContain('swarm');
+      expect(names).toContain('psm');
     });
   });
 

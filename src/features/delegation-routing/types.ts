@@ -32,7 +32,8 @@ export const ROLE_CATEGORY_DEFAULTS: Record<string, string> = {
   // Exploration roles
   explore: 'explore',
   'document-specialist': 'document-specialist',
-  researcher: 'researcher',
+  researcher: 'document-specialist',
+  'tdd-guide': 'test-engineer',
 
   // Advisory roles (high complexity)
   architect: 'architect',
@@ -58,6 +59,21 @@ export const ROLE_CATEGORY_DEFAULTS: Record<string, string> = {
   scientist: 'scientist',
   'build-fixer': 'build-fixer',
 };
+
+/**
+ * Deprecated role aliases mapped to canonical role names.
+ */
+export const DEPRECATED_ROLE_ALIASES: Readonly<Record<string, string>> = {
+  researcher: 'document-specialist',
+  'tdd-guide': 'test-engineer',
+};
+
+/**
+ * Normalize legacy role aliases to canonical role names.
+ */
+export function normalizeDelegationRole(role: string): string {
+  return DEPRECATED_ROLE_ALIASES[role] ?? role;
+}
 
 /**
  * Check if delegation routing is enabled
